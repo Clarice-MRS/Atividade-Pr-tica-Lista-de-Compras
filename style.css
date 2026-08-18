@@ -1,1 +1,72 @@
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Yatra+One&display=swap');
+
+html {
+    background-color: #79da9e;
+    font-size: 16px;
+    font-family: 'Yatra One';
+}
+
+ul {
+    background-color: #e478bb;
+    border-radius: 1rem;
+}
+
+h1 {
+    text-align: center;
+    font-family: 'Bricolage Grotesque';
+    font-size: 4rem;
+    font-weight: bolder;
+}
+
+form {
+    text-align: center;
+    font-size: 1.5rem;
+    margin: 1rem 0;
+}
+
+.Form-enviar{
+    border-radius: 50%;
+    border: none;
+    background-image: url("img/plus.svg");
+    background-position: center;
+    background-size: contain;
+    min-width: 24px;
+    aspect-ratio: 1;
+}
+
+.Lista {
+    list-style: none;
+
+    margin: 0 auto;
+    max-width: 1080px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 1rem;
+    border: solid 1px black;
+}
+
+.Lista-item {
+    display: flex;
+    border: solid 1px black;
+}
+
+.Lista-checkbox {
+    border: solid 1px black;
+}
+
+.Lista-texto {
+    flex-grow: 1;
+    font-size: 1.5rem;
+}
+
+.Lista-editar {
+    border: solid 1px black;
+}
+
+.Lista-remover {
+    border: solid 1px black;
+}
 

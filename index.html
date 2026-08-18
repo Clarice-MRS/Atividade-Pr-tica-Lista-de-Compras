@@ -1,1 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-br">
 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <script src="./script.js"></script>
+    <title>Liste</title>
+</head>
+
+<body>
+    <main>
+        <h1>Listaê!</h1>
+
+        <form>
+            <label class="Input-label" for="nome-input">Nome:</label>
+            <input class="Input-texto" name="nome" type="text" id="nome-input">
+
+            <!-- <label for="quantidade-input">Quantidade</label>
+            <input name="quantidade" type="text" id="quantidade-input">
+
+            <label for="categoria-select">Categoria</label>
+            <select name="categoria" id="categoria-select">
+                <option value=""></option>
+            </select> -->
+            <button class="Form-enviar" onclick="salvarItem()"></button>
+        </form>
+
+        <ul class="Lista">
+            <li class="Lista-item">
+                <input type="checkbox" name="status" id="status-input" class="Lista-checkbox">
+                <span class="Lista-texto">Lorem ipsum dolor sit</span>
+                <button class="Lista-editar" onclick="editarItem(1)"><img src="img/pencil.svg" alt="editar"></button>
+                <button class="Lista-remover" onclick="revomerItem(1)"><img src="img/trash.svg" alt="remover"></button>
+            </li>
+            <li class="Lista-item">
+                <input type="checkbox" name="status" id="status-input" class="Lista-checkbox">
+                <span class="Lista-texto">Lorem ipsum dolor sit</span>
+                <button class="Lista-editar" onclick="editarItem()"><img src="img/pencil.svg" alt="editar"></button>
+                <button class="Lista-remover" onclick="revomerItem()"><img src="img/trash.svg" alt="remover"></button>
+            </li>
+            <li class="Lista-item">
+                <input type="checkbox" name="status" id="status-input" class="Lista-checkbox">
+                <span class="Lista-texto">Lorem ipsum dolor sit</span>
+                <button class="Lista-editar" onclick="editarItem()"><img src="img/pencil.svg" alt="editar"></button>
+                <button class="Lista-remover" onclick="revomerItem()"><img src="img/trash.svg" alt="remover"></button>
+            </li>
+        </ul>
+    </main>
+</body>
+</html>
