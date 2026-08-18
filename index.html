@@ -13,7 +13,7 @@
     <main>
         <h1>Listaê!</h1>
 
-        <form>
+        <form id="form">
             <label class="Input-label" for="nome-input">Nome:</label>
             <input class="Input-texto" name="nome" type="text" id="nome-input">
 
@@ -24,27 +24,27 @@
             <select name="categoria" id="categoria-select">
                 <option value=""></option>
             </select> -->
-            <button class="Form-enviar" onclick="salvarItem()"></button>
+            <button type="submit" class="Form-enviar"></button>
         </form>
 
         <ul class="Lista">
-            <li class="Lista-item">
+            <li class="Lista-item" id="item-1">
                 <input type="checkbox" name="status" id="status-input" class="Lista-checkbox">
-                <span class="Lista-texto">Lorem ipsum dolor sit</span>
+                <span class="Lista-texto">Pão de Forma</span>
                 <button class="Lista-editar" onclick="editarItem(1)"><img src="img/pencil.svg" alt="editar"></button>
-                <button class="Lista-remover" onclick="revomerItem(1)"><img src="img/trash.svg" alt="remover"></button>
+                <button class="Lista-remover" onclick="removerItem(1)"><img src="img/trash.svg" alt="remover"></button>
             </li>
-            <li class="Lista-item">
+            <li class="Lista-item" id="item-3">
                 <input type="checkbox" name="status" id="status-input" class="Lista-checkbox">
-                <span class="Lista-texto">Lorem ipsum dolor sit</span>
-                <button class="Lista-editar" onclick="editarItem()"><img src="img/pencil.svg" alt="editar"></button>
-                <button class="Lista-remover" onclick="revomerItem()"><img src="img/trash.svg" alt="remover"></button>
+                <span class="Lista-texto">Café</span>
+                <button class="Lista-editar" onclick="editarItem(2)"><img src="img/pencil.svg" alt="editar"></button>
+                <button class="Lista-remover" onclick="removerItem(2)"><img src="img/trash.svg" alt="remover"></button>
             </li>
-            <li class="Lista-item">
+            <li class="Lista-item" id="item-3">
                 <input type="checkbox" name="status" id="status-input" class="Lista-checkbox">
-                <span class="Lista-texto">Lorem ipsum dolor sit</span>
-                <button class="Lista-editar" onclick="editarItem()"><img src="img/pencil.svg" alt="editar"></button>
-                <button class="Lista-remover" onclick="revomerItem()"><img src="img/trash.svg" alt="remover"></button>
+                <span class="Lista-texto">Detergente</span>
+                <button class="Lista-editar" onclick="editarItem(3)"><img src="img/pencil.svg" alt="editar"></button>
+                <button class="Lista-remover" onclick="removerItem(3)"><img src="img/trash.svg" alt="remover"></button>
             </li>
         </ul>
     </main>
