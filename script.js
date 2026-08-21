@@ -42,9 +42,16 @@ function criarItem() {
     if (!nome)
         return;
 
-    if (totalItems++ == 0)
+    if (totalItems++ == 0) {
         pMsgVazio.style.display = 'none';
-
+        listaCompras.innerHTML = `<p id="totalItens">Total: ${totalItems}</p>` + listaCompras.innerHTML;
+    }
+        
+    if (totalItems > 0) {
+        const pTotal = listaCompras.firstElementChild;
+        pTotal.textContent = `Total: ${totalItems}`;
+    }
+    
     const elemento = document.createElement("li");
 
     elemento.classList.add("Lista-item");
@@ -87,8 +94,16 @@ function removerItem(item) {
     if (confirm(`Remover item "${nomeItem}"?`)) {
         item.remove();
         totalItems -= 1;
-        if (totalItems == 0)
+
+        if (totalItems) {
+            const pTotal = listaCompras.firstElementChild;
+            pTotal.textContent = `Total: ${totalItems}`;
+        }
+
+        if (totalItems == 0) {
             pMsgVazio.style.display = "block";
+            listaCompras.querySelector("p").remove();
+        }
     }
 }
 
