@@ -29,6 +29,7 @@ function criarItem(evento) {
     document.getElementById("form").reset();
     
 	// Remover min-height do style da .Lista caso exista
+	// Arrumar botoes editar e remover
 }
 
 form.addEventListener("submit", criarItem);
