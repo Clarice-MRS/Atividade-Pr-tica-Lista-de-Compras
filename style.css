@@ -68,6 +68,8 @@ form {
 
 .Lista-checkbox {
     border: solid 1px black;
+    margin-right: 1rem;
+    margin-left: 1rem;
 }
 
 .Lista-texto {
@@ -83,4 +85,9 @@ form {
 .Lista-remover {
     border: none;
     background-color: transparent;
+    margin-right: 1rem;
+}
+
+.comprado {
+    text-decoration: line-through;
 }
