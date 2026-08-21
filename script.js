@@ -5,6 +5,9 @@ const pMsgVazio = document.getElementById('msg-vazio');
 
 let totalItems = 0;
 
+/**
+ * Configura todos os eventListeners ao carregar a página.
+ */
 document.addEventListener("DOMContentLoaded", () => {
     form.addEventListener("submit", (evento) => {
         evento.preventDefault();
@@ -21,9 +24,18 @@ document.addEventListener("DOMContentLoaded", () => {
         if (botaoRemover)
             removerItem(botaoRemover.closest(".Lista-item"));
     });
+
+    listaCompras.addEventListener("change", (evento) => {
+        if (!evento.target.matches(".Lista-checkbox"))
+            return;
+
+        alternarStatusItem(evento.target.closest(".Lista-item"));
+    });
 });
 
-
+/**
+ * Cria um item novo e adiciona à lista.
+ */
 function criarItem() {
     const nome = nomeInput.value;
 
@@ -50,11 +62,12 @@ function criarItem() {
 
     listaCompras.appendChild(elemento);
 
-    riscarItem(elemento);
-
     form.reset();
 }
 
+/**
+ * Faz o procedimento de edição para o item passado por parâmetro.
+ */
 function editarItem(item) {
     const spanNomeItem = item.querySelector(".Lista-texto");
     const nomeItem = spanNomeItem.textContent;
@@ -65,6 +78,9 @@ function editarItem(item) {
         spanNomeItem.textContent = novoNome;
 }
 
+/**
+ * Remove o item passado por parâmetro da lista.
+ */
 function removerItem(item) {
     const nomeItem = item.querySelector(".Lista-texto").textContent;
 
@@ -76,18 +92,15 @@ function removerItem(item) {
     }
 }
 
-function riscarItem(elemento) {
-
+/**
+ * Altera a exibição do item passado por parâmetro (toggle).
+ */
+function alternarStatusItem(elemento) {
     const checkbox = elemento.querySelector(".Lista-checkbox");
     const titulo = elemento.querySelector(".Lista-texto");
 
-    checkbox.addEventListener("change", function() {
-
-        if (checkbox.checked) {
-            titulo.classList.add("comprado");
-        } else {
-            titulo.classList.remove("comprado");
-        }
-
-    });
+    if (checkbox.checked)
+        titulo.classList.add("comprado");
+    else
+        titulo.classList.remove("comprado");
 }
