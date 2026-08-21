@@ -1,10 +1,37 @@
 const form = document.getElementById("form");
+const nomeInput = document.getElementById("nome-input");
+const listaCompras = document.querySelector("#lista");
 
-function criarItem() {
-	// Cancelar o comportamento padrão do form de redirecionar a página
-	// Ocultar pMsgVazio se estiver visível
+function criarItem(evento) {
+
+    evento.preventDefault();
+
+    const valor = nomeInput.value;
+
+    const elemento = document.createElement("li");
+
+    elemento.innerHTML = `
+        <span class="titulo-item">${valor}</span>
+
+        <button class="Lista-editar">
+            <img src="img/pencil.svg" alt="editar">
+        </button>
+
+        <button class="Lista-remover">
+            <img src="img/trash.svg" alt="remover">
+        </button>
+    `;
+
+    listaCompras.appendChild(elemento);
+
+    document.getElementById('msg-vazio').style.display = 'none';
+
+    document.getElementById("form").reset();
+    
 	// Remover min-height do style da .Lista caso exista
 }
+
+form.addEventListener("submit", criarItem);
 
 function editarItem(id) {
     const item = document.getElementById(`item-${id}`);
