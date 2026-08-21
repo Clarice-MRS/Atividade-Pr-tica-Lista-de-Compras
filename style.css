@@ -1,6 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Yatra+One&display=swap');
 
+* {
+    box-sizing: border-box;
+}
+
 html {
     background-color: #9ce3edc3;
     font-size: 16px;
@@ -8,7 +12,7 @@ html {
 }
 
 ul {
-    background-color: #fff67eab;
+    background-color: white;
     border-radius: 1rem;
 }
 
@@ -58,7 +62,7 @@ form {
 
 .Lista {
     list-style: none;
-
+    border: solid 10px white;
     margin: 0 auto;
     max-width: 1080px;
     height: 20rem;
@@ -67,12 +71,12 @@ form {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
-    padding: 1rem;
+    padding: 0;
     box-shadow: 4px 10px 10px rgba(0, 0, 0, 0.25);
 }
 
 .Lista-item {
-    background-color: #fff67eab;
+    background-color: #9cedc0c3;
     display: flex;
     border: thin ;
     border-radius: 5px;
