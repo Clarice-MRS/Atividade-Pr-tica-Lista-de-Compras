@@ -25,7 +25,7 @@ function criarItem(evento) {
         <button class="Lista-editar" onclick="editarItem(${totalItems})">
             <img src="img/pencil.svg" alt="editar">
         </button>
-        <button class="Lista-editar" onclick="removerItem(${totalItems})">
+        <button class="Lista-remover" onclick="removerItem(${totalItems})">
             <img src="img/trash.svg" alt="remover">
         </button>
     `;
