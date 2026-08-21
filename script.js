@@ -1,7 +1,6 @@
 const form = document.getElementById("form");
 const nomeInput = document.getElementById("nome-input");
 const listaCompras = document.querySelector("#lista");
-const botaoAdicionar = document.querySelector('button[type="submit"]');
 const pMsgVazio = document.getElementById('msg-vazio');
 
 let totalItems = 0;
@@ -12,8 +11,18 @@ document.addEventListener("DOMContentLoaded", () => {
         criarItem();
     });
 
-    botaoAdicionar.addEventListener("click", criarItem());
+    listaCompras.addEventListener("click", (evento) => {
+        const botaoEditar = evento.target.closest(".Lista-editar");
+        const botaoRemover = evento.target.closest(".Lista-remover");
+
+        if (botaoEditar)
+            editarItem(botaoEditar.closest(".Lista-item"));
+
+        if (botaoRemover)
+            removerItem(botaoRemover.closest(".Lista-item"));
+    });
 });
+
 
 function criarItem() {
     const nome = nomeInput.value;
@@ -29,12 +38,12 @@ function criarItem() {
     elemento.classList.add("Lista-item");
     elemento.id = `item-${totalItems}`;
     elemento.innerHTML = `
-        <input type="checkbox" name="status" id="status-input" class="Lista-checkbox">
+        <input type="checkbox" name="status" class="Lista-checkbox">
         <span class="Lista-texto">${nome}</span>
-        <button class="Lista-editar" onclick="editarItem(${totalItems})">
+        <button type="button" class="Lista-editar">
             <img src="img/pencil.svg" alt="editar">
         </button>
-        <button class="Lista-editar" onclick="removerItem(${totalItems})">
+        <button type="button" class="Lista-remover">
             <img src="img/trash.svg" alt="remover">
         </button>
     `;
@@ -44,27 +53,23 @@ function criarItem() {
     form.reset();
 }
 
-function editarItem(id) {
-    const item = document.getElementById(`item-${id}`);
-    const nomeItem = item.children[1].textContent;
+function editarItem(item) {
+    const spanNomeItem = item.querySelector(".Lista-texto");
+    const nomeItem = spanNomeItem.textContent;
 
     const novoNome = prompt(`Editar item "${nomeItem}":`, nomeItem);
-
-    const spanNomeItem = item.getElementsByClassName("Lista-texto")[0];
 
     if (novoNome)
         spanNomeItem.textContent = novoNome;
 }
 
-function removerItem(id) {
-    const item = document.getElementById(`item-${id}`);
-    const nomeItem = item.children[1].textContent;
+function removerItem(item) {
+    const nomeItem = item.querySelector(".Lista-texto").textContent;
 
     if (confirm(`Remover item "${nomeItem}"?`)) {
         item.remove();
         totalItems -= 1;
+        if (totalItems == 0)
+            pMsgVazio.style.display = "block";
     }
-
-    if (totalItems == 0)
-        pMsgVazio.style.display = "block";
 }
