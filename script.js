@@ -50,6 +50,8 @@ function criarItem() {
 
     listaCompras.appendChild(elemento);
 
+    riscarItem(elemento);
+
     form.reset();
 }
 
@@ -72,4 +74,20 @@ function removerItem(item) {
         if (totalItems == 0)
             pMsgVazio.style.display = "block";
     }
+}
+
+function riscarItem(elemento) {
+
+    const checkbox = elemento.querySelector(".Lista-checkbox");
+    const titulo = elemento.querySelector(".Lista-texto");
+
+    checkbox.addEventListener("change", function() {
+
+        if (checkbox.checked) {
+            titulo.classList.add("comprado");
+        } else {
+            titulo.classList.remove("comprado");
+        }
+
+    });
 }
