@@ -2,26 +2,35 @@ const form = document.getElementById("form");
 const nomeInput = document.getElementById("nome-input");
 const listaCompras = document.querySelector("#lista");
 const botaoAdicionar = document.querySelector('button[type="submit"]');
+const pMsgVazio = document.getElementById('msg-vazio');
 
 let totalItems = 0;
 
 document.addEventListener("DOMContentLoaded", () => {
-    botaoAdicionar.addEventListener("click", criarItem(evento));
-})
+    form.addEventListener("submit", (evento) => {
+        evento.preventDefault();
+        criarItem();
+    });
 
-function criarItem(evento) {
-    evento.preventDefault();
+    botaoAdicionar.addEventListener("click", criarItem());
+});
 
-    totalItems += 1;
+function criarItem() {
+    const nome = nomeInput.value;
 
-    const valor = nomeInput.value;
+    if (!nome)
+        return;
+
+    if (totalItems++ == 0)
+        pMsgVazio.style.display = 'none';
+
     const elemento = document.createElement("li");
 
     elemento.classList.add("Lista-item");
     elemento.id = `item-${totalItems}`;
     elemento.innerHTML = `
         <input type="checkbox" name="status" id="status-input" class="Lista-checkbox">
-        <span class="Lista-texto">${valor}</span>
+        <span class="Lista-texto">${nome}</span>
         <button class="Lista-editar" onclick="editarItem(${totalItems})">
             <img src="img/pencil.svg" alt="editar">
         </button>
@@ -32,15 +41,8 @@ function criarItem(evento) {
 
     listaCompras.appendChild(elemento);
 
-    document.getElementById('msg-vazio').style.display = 'none';
-
-    document.getElementById("form").reset();
-
-    // Remover min-height do style da .Lista caso exista
-    // Arrumar botoes editar e remover
+    form.reset();
 }
-
-form.addEventListener("submit", criarItem);
 
 function editarItem(id) {
     const item = document.getElementById(`item-${id}`);
@@ -58,13 +60,11 @@ function removerItem(id) {
     const item = document.getElementById(`item-${id}`);
     const nomeItem = item.children[1].textContent;
 
-    if (confirm(`Remover item "${nomeItem}"?`))
+    if (confirm(`Remover item "${nomeItem}"?`)) {
         item.remove();
+        totalItems -= 1;
+    }
 
-    const numItens = document.getElementsByClassName("Lista-item").length;
-    const lista = document.getElementById("lista");
-    const pMsgVazio = lista.firstElementChild;
-
-    if (numItens === 0)
+    if (totalItems == 0)
         pMsgVazio.style.display = "block";
 }
