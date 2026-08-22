@@ -37,25 +37,31 @@ document.addEventListener("DOMContentLoaded", () => {
  * Cria um item novo e adiciona à lista.
  */
 function criarItem() {
-    const nome = nomeInput.value;
+    const nome = nomeInput.value.trim();
 
     if (!nome)
         return;
 
-    if (totalItems++ == 0) {
-        pMsgVazio.style.display = 'none';
-        listaCompras.innerHTML = `<p id="totalItens">Total: ${totalItems}</p>` + listaCompras.innerHTML;
-    }
-        
-    if (totalItems > 0) {
-        const pTotal = listaCompras.firstElementChild;
+    totalItems++;
+
+    if (totalItems === 1) {
+        pMsgVazio.style.display = "none";
+
+        const pTotal = document.createElement("p");
+        pTotal.id = "totalItens";
+        pTotal.textContent = `Total: ${totalItems}`;
+
+        listaCompras.prepend(pTotal);
+    } else {
+        const pTotal = document.getElementById("totalItens");
         pTotal.textContent = `Total: ${totalItems}`;
     }
-    
+
     const elemento = document.createElement("li");
 
     elemento.classList.add("Lista-item");
     elemento.id = `item-${totalItems}`;
+
     elemento.innerHTML = `
         <input type="checkbox" name="status" class="Lista-checkbox">
         <span class="Lista-texto">${nome}</span>
@@ -91,20 +97,25 @@ function editarItem(item) {
 function removerItem(item) {
     const nomeItem = item.querySelector(".Lista-texto").textContent;
 
-    if (confirm(`Remover item "${nomeItem}"?`)) {
-        item.remove();
-        totalItems -= 1;
+    if (!confirm(`Remover item "${nomeItem}"?`))
+        return;
 
-        if (totalItems) {
-            const pTotal = listaCompras.firstElementChild;
-            pTotal.textContent = `Total: ${totalItems}`;
-        }
+    item.remove();
+    totalItems--;
 
-        if (totalItems == 0) {
-            pMsgVazio.style.display = "block";
-            listaCompras.querySelector("p").remove();
-        }
+    if (totalItems > 0) {
+        const pTotal = document.getElementById("totalItens");
+        pTotal.textContent = `Total: ${totalItems}`;
+        return;
     }
+
+    // Não há mais itens
+    const pTotal = document.getElementById("totalItens");
+
+    if (pTotal)
+        pTotal.remove();
+
+    pMsgVazio.style.display = "block";
 }
 
 /**
