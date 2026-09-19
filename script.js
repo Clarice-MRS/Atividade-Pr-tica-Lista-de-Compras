@@ -2,8 +2,29 @@ const form = document.getElementById("form");
 const nomeInput = document.getElementById("nome-input");
 const listaCompras = document.querySelector("#lista");
 const pMsgVazio = document.getElementById('msg-vazio');
+const botaoApagar = document.getElementById("Lista-apagar");
 
 let totalItems = 0;
+
+const dados = {
+    itens: [
+        {
+            id: crypto.randomUUID(),
+            nome: "Exemplo de produto",
+            // quantidade: 1
+            isComprado: false
+        },
+        {
+            id: crypto.randomUUID(),
+            nome: "Mais um produto",
+            // quantidade: 6
+            isComprado: true
+        },
+    ]
+};
+
+// const dados = Object.create(dadosDefault);
+// dados = carregarDados();
 
 /**
  * Configura todos os eventListeners ao carregar a página.
@@ -31,6 +52,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
         alternarStatusItem(evento.target.closest(".Lista-item"));
     });
+
+    botaoApagar.addEventListener("click", () => {
+    apagarLista();
+    });
 });
 
 /**
@@ -46,6 +71,7 @@ function criarItem() {
 
     if (totalItems === 1) {
         pMsgVazio.style.display = "none";
+        botaoApagar.style.display = "block";
 
         const pTotal = document.createElement("p");
         pTotal.id = "totalItens";
@@ -76,6 +102,17 @@ function criarItem() {
     listaCompras.appendChild(elemento);
 
     form.reset();
+
+    /*********************** PARTE PARA O LOCALSTORAGE ************************/
+    console.log("Tentando salvar no localstorage")
+    novoRegistro = {
+        id: crypto.randomUUID(),
+        nome: nome,
+        // quantidade: quantidade
+        isComprado: false
+    }
+    dados.itens.push(novoRegistro);
+    salvarDados();
 }
 
 /**
@@ -94,7 +131,7 @@ function editarItem(item) {
 /**
  * Remove o item passado por parâmetro da lista.
  */
-function removerItem(item) {
+function removerItem(item/*, id */) {
     const nomeItem = item.querySelector(".Lista-texto").textContent;
 
     if (!confirm(`Remover item "${nomeItem}"?`))
@@ -116,6 +153,9 @@ function removerItem(item) {
         pTotal.remove();
 
     pMsgVazio.style.display = "block";
+
+    /*********************** PARTE PARA O LOCALSTORAGE ************************/
+    dados.itens = data.itens.filter(registro => registro.id !== id)
 }
 
 /**
@@ -129,4 +169,67 @@ function alternarStatusItem(elemento) {
         titulo.classList.add("comprado");
     else
         titulo.classList.remove("comprado");
+}
+
+/*apagar tudo */
+function apagarLista() {
+const itens = listaCompras.querySelectorAll(".Lista-item");
+
+    if (!confirm("Apagar lista?"))
+        return;
+
+    for (const item of itens) {
+        item.remove();
+        totalItems--;
+    }
+
+    const pTotal = document.getElementById("totalItens");
+
+    if (pTotal) {
+        pTotal.remove();
+    }
+
+    pMsgVazio.style.display = "block";
+    botaoApagar.style.display = "none";
+
+    /*********************** PARTE PARA O LOCALSTORAGE ************************/
+    dados.itens = [];
+}
+
+
+/******************************* LOCALSTORAGE *********************************/
+function carregarDados() {
+    try {
+        return (JSON.parse(localStorage.getItem("dados")));
+    } catch (error) {
+        console.log("Erro ao carregar os dados: ", error);
+    }
+
+    return ({
+        itens: [
+            {
+                id: crypto.randomUUID(),
+                nome: "Exemplo de produto",
+                // quantidade: 1
+                isComprado: false
+            },
+            {
+                id: crypto.randomUUID(),
+                nome: "Mais um produto",
+                // quantidade: 6
+                isComprado: true
+            },
+        ]
+    });
+}
+
+function salvarDados() {
+    try {
+        const json = JSON.stringify(dados);
+        localStorage.setItem("dados", json);
+        return (true);
+    } catch (error) {
+        console.log("Não foi possível salvar os dados devido a: ", error);
+        return (false);
+    }
 }
