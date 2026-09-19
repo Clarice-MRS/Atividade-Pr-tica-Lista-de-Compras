@@ -6,25 +6,22 @@ const botaoApagar = document.getElementById("Lista-apagar");
 
 let totalItems = 0;
 
-const dados = {
+let dados = {
     itens: [
-        {
-            id: crypto.randomUUID(),
-            nome: "Exemplo de produto",
-            // quantidade: 1
-            isComprado: false
-        },
-        {
-            id: crypto.randomUUID(),
-            nome: "Mais um produto",
-            // quantidade: 6
-            isComprado: true
-        },
+        // {
+        //     id: crypto.randomUUID(),
+        //     nome: "Produto 1",
+        //     // quantidade: 1
+        //     isComprado: false
+        // },
+        // {
+        //     id: crypto.randomUUID(),
+        //     nome: "Produto 2",
+        //     // quantidade: 6
+        //     isComprado: true
+        // },
     ]
 };
-
-// const dados = Object.create(dadosDefault);
-// dados = carregarDados();
 
 /**
  * Configura todos os eventListeners ao carregar a página.
@@ -54,8 +51,11 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     botaoApagar.addEventListener("click", () => {
-    apagarLista();
+        apagarLista();
     });
+    dados = carregarDados();
+    console.log(dados);
+    renderizarLista();
 });
 
 /**
@@ -67,44 +67,25 @@ function criarItem() {
     if (!nome)
         return;
 
-    totalItems++;
+    // totalItems++;
 
-    if (totalItems === 1) {
-        pMsgVazio.style.display = "none";
-        botaoApagar.style.display = "block";
+    // if (totalItems === 1) {
+    //     pMsgVazio.style.display = "none";
+    //     botaoApagar.style.display = "block";
 
-        const pTotal = document.createElement("p");
-        pTotal.id = "totalItens";
-        pTotal.textContent = `Total: ${totalItems}`;
+    //     const pTotal = document.createElement("p");
+    //     pTotal.id = "totalItens";
+    //     pTotal.textContent = `Total: ${totalItems}`;
 
-        listaCompras.prepend(pTotal);
-    } else {
-        const pTotal = document.getElementById("totalItens");
-        pTotal.textContent = `Total: ${totalItems}`;
-    }
-
-    const elemento = document.createElement("li");
-
-    elemento.classList.add("Lista-item");
-    elemento.id = `item-${totalItems}`;
-
-    elemento.innerHTML = `
-        <input type="checkbox" name="status" class="Lista-checkbox">
-        <span class="Lista-texto">${nome}</span>
-        <button type="button" class="Lista-editar">
-            <img src="img/pencil.svg" alt="editar">
-        </button>
-        <button type="button" class="Lista-remover">
-            <img src="img/trash.svg" alt="remover">
-        </button>
-    `;
-
-    listaCompras.appendChild(elemento);
+    //     listaCompras.prepend(pTotal);
+    // } else {
+    //     const pTotal = document.getElementById("totalItens");
+    //     pTotal.textContent = `Total: ${totalItems}`;
+    // }
 
     form.reset();
 
     /*********************** PARTE PARA O LOCALSTORAGE ************************/
-    console.log("Tentando salvar no localstorage")
     novoRegistro = {
         id: crypto.randomUUID(),
         nome: nome,
@@ -112,7 +93,9 @@ function criarItem() {
         isComprado: false
     }
     dados.itens.push(novoRegistro);
+    console.log(dados);
     salvarDados();
+    renderizarLista();
 }
 
 /**
@@ -131,31 +114,27 @@ function editarItem(item) {
 /**
  * Remove o item passado por parâmetro da lista.
  */
-function removerItem(item/*, id */) {
-    const nomeItem = item.querySelector(".Lista-texto").textContent;
+function removerItem(item) {
+    const id = item.dataset.id;
 
-    if (!confirm(`Remover item "${nomeItem}"?`))
-        return;
+    console.log(id);
 
-    item.remove();
-    totalItems--;
+    try {
+        const dados = JSON.parse(localStorage.getItem("dados"));
 
-    if (totalItems > 0) {
-        const pTotal = document.getElementById("totalItens");
-        pTotal.textContent = `Total: ${totalItems}`;
-        return;
+        elemento = dados.itens.filter(registro => registro.id == id)[0];
+        console.log(elemento);
+    } catch (error) {
+        console.log("Erro ao remover:", error);
     }
 
-    // Não há mais itens
-    const pTotal = document.getElementById("totalItens");
-
-    if (pTotal)
-        pTotal.remove();
-
-    pMsgVazio.style.display = "block";
+    if (!confirm(`Remover item "${elemento.nome}"?`))
+        return;
 
     /*********************** PARTE PARA O LOCALSTORAGE ************************/
-    dados.itens = data.itens.filter(registro => registro.id !== id)
+    dados.itens = dados.itens.filter(registro => registro.id !== id)
+    salvarDados();
+    renderizarLista()
 }
 
 /**
@@ -189,38 +168,38 @@ const itens = listaCompras.querySelectorAll(".Lista-item");
         pTotal.remove();
     }
 
-    pMsgVazio.style.display = "block";
+    // pMsgVazio.style.display = "block";
     botaoApagar.style.display = "none";
 
     /*********************** PARTE PARA O LOCALSTORAGE ************************/
     dados.itens = [];
+    salvarDados();
+    renderizarLista();
 }
-
 
 /******************************* LOCALSTORAGE *********************************/
 function carregarDados() {
-    try {
-        return (JSON.parse(localStorage.getItem("dados")));
-    } catch (error) {
-        console.log("Erro ao carregar os dados: ", error);
-    }
+    const dados = JSON.parse(localStorage.getItem("dados"));
 
-    return ({
+    if (dados == null)
+        return ({
         itens: [
-            {
-                id: crypto.randomUUID(),
-                nome: "Exemplo de produto",
-                // quantidade: 1
-                isComprado: false
-            },
-            {
-                id: crypto.randomUUID(),
-                nome: "Mais um produto",
-                // quantidade: 6
-                isComprado: true
-            },
+            // {
+            //     id: crypto.randomUUID(),
+            //     nome: "Exemplo de produto",
+            //     // quantidade: 1
+            //     isComprado: false
+            // },
+            // {
+            //     id: crypto.randomUUID(),
+            //     nome: "Mais um produto",
+            //     // quantidade: 6
+            //     isComprado: true
+            // },
         ]
     });
+
+    return (dados);
 }
 
 function salvarDados() {
@@ -232,4 +211,40 @@ function salvarDados() {
         console.log("Não foi possível salvar os dados devido a: ", error);
         return (false);
     }
+}
+
+function renderizarLista() {
+    console.log("Renderizando", dados.itens.length, "itens");
+
+    const sapo = pMsgVazio;
+
+    listaCompras.replaceChildren();
+
+    if (dados.itens.length == 0)
+        listaCompras.append(sapo);
+
+    dados.itens.forEach(produto => {
+        const elemento = document.createElement("li");
+
+        elemento.classList.add("Lista-item");
+        // elemento.id = `item-${totalItems}`; // retirar dps
+        elemento.dataset.id = produto.id;
+
+        elemento.innerHTML = `
+            <input type="checkbox" name="status" class="Lista-checkbox">
+            <span class="Lista-texto">${produto.nome}</span>
+            <button type="button" class="Lista-editar">
+                <img src="img/pencil.svg" alt="editar">
+            </button>
+            <button type="button" class="Lista-remover">
+                <img src="img/trash.svg" alt="remover">
+            </button>
+        `;
+
+        listaCompras.appendChild(elemento);
+
+        console.log(produto.nome);
+    });
+
+    botaoApagar.style.display = dados.itens.length == 0 ? "none" : "block";
 }
