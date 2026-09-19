@@ -4,14 +4,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Listaê é uma plataforma para criar listas de compras, permitindo adicionar itens e marcá-los como comprados.">
+
     <link rel="stylesheet" href="style.css">
     <script src="./script.js" defer></script>
-    <title>Liste</title>
+    <title>Listaê</title>
 </head>
 
 <body>
-    <main>
+
+    <header>
         <h1>Listaê!</h1>
+    </header>
+
+    <main>
 
         <form id="form">
             <label class="Input-label" for="nome-input">Nome:</label>
@@ -30,6 +36,17 @@
         <ul class="Lista" id="lista">
 			<p id="msg-vazio">Uau! Que vazio... 🐸</p>
         </ul>
+        <div class="Remover-itens">
+            <button type="button" id="Lista-apagar">Remover todos os Itens</button>
+        </div>
     </main>
+    <footer>
+        <p> &copy;Listaê!</p>
+
+        <a href="mailto:listae!@gmail.com">
+            Dúvidas? Entre em contato!
+        </a>
+    </footer>
+
 </body>
 </html>
