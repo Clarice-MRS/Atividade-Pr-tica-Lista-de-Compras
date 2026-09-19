@@ -169,7 +169,9 @@ function alternarStatusItem(elemento) {
         titulo.classList.remove("comprado");
 }
 
-/*apagar tudo */
+/**
+ * Apaga todos os itens da lista.
+ */
 function apagarLista() {
 const itens = listaCompras.querySelectorAll(".Lista-item");
 
