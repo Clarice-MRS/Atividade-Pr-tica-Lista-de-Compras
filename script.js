@@ -107,8 +107,16 @@ function editarItem(item) {
 
     const novoNome = prompt(`Editar item "${nomeItem}":`, nomeItem);
 
-    if (novoNome)
-        spanNomeItem.textContent = novoNome;
+    if (novoNome) {
+        const id = item.dataset.id;
+
+        const produto = dados.itens.find(registro => registro.id === id);
+
+        produto.nome = novoNome;
+
+        salvarDados();
+        renderizarLista();
+    }
 }
 
 /**
@@ -134,7 +142,7 @@ function removerItem(item) {
     /*********************** PARTE PARA O LOCALSTORAGE ************************/
     dados.itens = dados.itens.filter(registro => registro.id !== id)
     salvarDados();
-    renderizarLista()
+    renderizarLista();
 }
 
 /**
@@ -142,12 +150,15 @@ function removerItem(item) {
  */
 function alternarStatusItem(elemento) {
     const checkbox = elemento.querySelector(".Lista-checkbox");
-    const titulo = elemento.querySelector(".Lista-texto");
+    // const titulo = elemento.querySelector(".Lista-texto"); //não usei
 
-    if (checkbox.checked)
-        titulo.classList.add("comprado");
-    else
-        titulo.classList.remove("comprado");
+    const id = elemento.dataset.id;
+    const produto = dados.itens.find(registro => registro.id === id);
+
+    produto.isComprado = checkbox.checked;
+
+    salvarDados();
+    renderizarLista();
 }
 
 /**
@@ -242,6 +253,14 @@ function renderizarLista() {
                 <img src="img/trash.svg" alt="remover">
             </button>
         `;
+
+        const checkbox = elemento.querySelector(".Lista-checkbox");
+        const titulo = elemento.querySelector(".Lista-texto");
+
+        if (produto.isComprado) {
+            checkbox.checked = true;
+            titulo.classList.add("comprado");
+        }
 
         listaCompras.appendChild(elemento);
 
